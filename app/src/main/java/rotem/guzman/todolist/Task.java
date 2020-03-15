@@ -15,4 +15,10 @@ public class Task {
         this.task = task;
     }
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "task='" + task + '\'' +
+                '}';
+    }
 }

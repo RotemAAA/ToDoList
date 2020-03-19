@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@color/pink"
+    android:background="@color/white"
     android:outlineAmbientShadowColor="@color/black"
     android:outlineProvider="background"
     xmlns:tools="http://schemas.android.com/tools">
@@ -14,7 +14,7 @@
         android:padding="20dp"
         android:text="fsfdsf"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:gravity="center"
         tools:text="task: task task task"></TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

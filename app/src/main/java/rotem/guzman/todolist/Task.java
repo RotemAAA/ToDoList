@@ -1,10 +1,24 @@
 package rotem.guzman.todolist;
 
 public class Task {
-    private String task;
 
-    public Task(String task) {
+    private String task;
+    private Status status;
+
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+
+
+    public Task(String task, Status status) {
         this.task = task;
+        this.status = status;
     }
 
     public String getTask() {
@@ -19,6 +33,7 @@ public class Task {
     public String toString() {
         return "Task{" +
                 "task='" + task + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

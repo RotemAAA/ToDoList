@@ -1,52 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddTaskActivity">
+    tools:context=".activities.AddTaskActivity">
 
     <TextView
         android:id="@+id/add_tv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="Add a new Task"
         android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:text="Add a new Task"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimaryDark"
         android:textAlignment="center"
-        tools:layout_editor_absoluteX="171dp"
-        tools:layout_editor_absoluteY="71dp" />
-
+        android:textSize="30dp"
+ />
     <EditText
-        android:id="@+id/my_task_et"
+        android:id="@+id/my_task_title_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="my task..."
         android:layout_margin="30dp"
+        android:ems="10"
+        android:hint="title.."
+        android:inputType="textPersonName"
         tools:layout_editor_absoluteX="65dp"
         tools:layout_editor_absoluteY="119dp" />
     <EditText
-        android:id="@+id/my_status_et"
+        android:id="@+id/my_task_description_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="my status..."
         android:layout_margin="30dp"
+        android:ems="10"
+        android:hint="description.."
+        android:inputType="textPersonName"
         tools:layout_editor_absoluteX="65dp"
         tools:layout_editor_absoluteY="119dp" />
 
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/status_group"
+            android:layout_width="match_parent"
+            android:layout_height="181dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/waiting_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="waiting" />
+
+            <RadioButton
+                android:id="@+id/in_progress_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="in progress" />
+
+            <RadioButton
+                android:id="@+id/done_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="done" />
+        </RadioGroup>
+    </LinearLayout>
 
 
     <Button
         android:id="@+id/save_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:text="save"
         android:textSize="30dp"
-        android:layout_margin="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
         tools:layout_editor_absoluteX="158dp"
         tools:layout_editor_absoluteY="633dp" />
+
 </LinearLayout>

@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="@color/white"
     android:outlineAmbientShadowColor="@color/black"
-    android:outlineProvider="background"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:outlineProvider="background">
 
     <TextView
         android:id="@+id/in_cell_task_tv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:padding="20dp"
-        android:text="fsfdsf"
         android:textColor="@color/black"
         android:textSize="30sp"
-        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="task: task task task"></TextView>
+
+    <View
+        android:id="@+id/status_indicator"
+        android:layout_width="18dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></View>
 </androidx.constraintlayout.widget.ConstraintLayout>

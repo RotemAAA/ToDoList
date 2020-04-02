@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".fragments.TaskFragment">
+
+    <EditText
+        android:id="@+id/todo_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/alfa_slab_one"
+        android:textSize="30sp"
+        tools:text="title" />
+
+    <EditText
+        android:id="@+id/todo_description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="28dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        tools:text="description" />
+
+    <RadioGroup
+        android:id="@+id/status_group"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/waiting_status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="waiting" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/in_progress_status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="in progress" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/done_status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="done" />
+    </RadioGroup>
+
+</LinearLayout>

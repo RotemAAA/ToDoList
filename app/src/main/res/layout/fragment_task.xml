@@ -56,4 +56,10 @@
             android:text="done" />
     </RadioGroup>
 
+    <Button
+        android:id="@+id/update_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundedbutton"
+        android:text="update"></Button>
 </LinearLayout>

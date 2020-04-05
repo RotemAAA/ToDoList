@@ -9,6 +9,6 @@ public interface ShowTask {
 
     void updateStatus(int id, String status);
     void updateTitle(int id, String title);
-    void updateDescription(int id, String description);
+    void updateDescription(int id, String title);
 
 }

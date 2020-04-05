@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements ShowTask {
 
     TaskAdapter adapter;
     RecyclerView taskListRv;
+    List<Task> list = DataManager.getMyTasks();
 
     Button addNewTaskBtn;
 
@@ -64,25 +65,23 @@ public class MainActivity extends AppCompatActivity implements ShowTask {
             return;
         } else {
             fragment = TaskFragment.newInstance(task.getId());
+//            fragment = new TaskFragment();
             manger.beginTransaction()
                     .add(R.id.container, fragment, "task")
                     //.addToBackStack("fragment") //Adds the replaced fragment to the stack
                     .commit();
+            fragment.updateInformationUI(task);
         }
     }
 
-
     @Override
     public void updateStatus(int id, String status) {
-
-
-        List<Task> list = DataManager.getMyTasks();
-
         for (int i = 0; i < list.size(); i++) {
             Task task = list.get(i);
             if (task.getId() == id) {
                 task.setStatus(status);
-                adapter.notifyItemChanged(i);
+                DataManager.updateTask(task);
+                adapter.updateData(list);
                 return;
             }
         }
@@ -91,11 +90,25 @@ public class MainActivity extends AppCompatActivity implements ShowTask {
 
     @Override
     public void updateTitle(int id, String title) {
-
-    }
+        for (int i = 0; i < list.size(); i++) {
+            Task task = list.get(i);
+            if (task.getId() == id) {
+                task.setTitle(title);
+                DataManager.updateTask(task);
+                adapter.updateData(list);
+                return;
+            }
+        }}
 
     @Override
     public void updateDescription(int id, String description) {
-
+        for (int i = 0; i < list.size(); i++) {
+            Task task = list.get(i);
+            if (task.getId() == id) {
+                task.setDescription(description);
+                DataManager.updateTask(task);
+                adapter.updateData(list);
+                return;
+            }}
     }
 }

@@ -35,6 +35,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         notifyDataSetChanged();
     }
 
+    public void updateData(List<Task> list){
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
@@ -44,6 +49,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         return new TaskViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, final int position) {

@@ -96,7 +96,6 @@ public class AddTaskActivity extends AppCompatActivity {
                         }, 3000);
                         newTaskTitleString = myTaskTitleEt.getText().toString();
                         newTaskDescriptionString = myTaskDescriptionEt.getText().toString();
-
                         Task task = new Task(DataManager.getCount(), newTaskTitleString, newTaskDescriptionString, myStatus);
 
 

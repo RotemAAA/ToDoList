@@ -13,6 +13,8 @@ public class DataManager {
     public static List<Task> myTasks = new ArrayList<>();
     private static TaskDaoDatabase db;
     private static int count;
+
+
     public static int getCount() {
         return count;
     }
@@ -58,7 +60,7 @@ public class DataManager {
     public static void addTask(Task task) {
         task.setId(count);
         myTasks.add(task);
-        db.taskDao().insertAll(task);
+        db.taskDao().insertAll(myTasks);
 
 
         count++;
@@ -75,7 +77,7 @@ public class DataManager {
      * @return the task with the specified id or null if not found
      */
     public static Task findTaskByID(int id) {
-        for (Task task : myTasks) {
+        for (Task task : db.taskDao().getAll()) {
             if (task.getId() == id) {
                 return task;
             }

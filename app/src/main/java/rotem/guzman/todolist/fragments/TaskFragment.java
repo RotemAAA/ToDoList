@@ -1,5 +1,6 @@
 package rotem.guzman.todolist.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -16,20 +16,19 @@ import androidx.fragment.app.Fragment;
 import rotem.guzman.todolist.R;
 import rotem.guzman.todolist.database.DataManager;
 import rotem.guzman.todolist.model.Task;
-import rotem.guzman.todolist.utils.ShowTask;
+import rotem.guzman.todolist.utils.TaskUpdateable;
 
 public class TaskFragment extends Fragment {
     private Task task;
     private EditText title, description;
     private RadioGroup statusGroup;
-    Button updateBtn;
-    String newTitle;
-    String newDescription;
+    private int currentTaskPosition;
 
-    public static TaskFragment newInstance(int taskId) {
+    public static TaskFragment newInstance(int taskId, int position) {
         TaskFragment fragment = new TaskFragment();
         Bundle args = new Bundle();
         args.putInt("TASK_ID", taskId);
+        args.putInt("POSITION", position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,9 +36,11 @@ public class TaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            int taskId = getArguments().getInt("TASK_ID");
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            int taskId = arguments.getInt("TASK_ID");
             task = DataManager.findTaskByID(taskId);
+            currentTaskPosition = arguments.getInt("POSITION");
         }
     }
 
@@ -57,53 +58,59 @@ public class TaskFragment extends Fragment {
 
         title = view.findViewById(R.id.todo_title);
 
-        updateBtn = view.findViewById(R.id.update_btn);
+        Button updateBtn = view.findViewById(R.id.update_btn);
 //        if (title != null)
 //        title.setText(task.getTitle());
 //        if (description != null)
 //        description.setText(task.getDescription());
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newTitle = String.valueOf(title.getText());
-                newDescription = String.valueOf(description.getText());
-                if (getContext() instanceof ShowTask) {
-                    ((ShowTask) getContext()).updateTitle(task.getId(), newTitle);
-                    ((ShowTask) getContext()).updateDescription(task.getId(), newDescription);
-                }
 
-            }
+        updateBtn.setOnClickListener(v -> {
+            String newTitle = title.getText().toString();
+            String newDescription = description.getText().toString();
+            task.setTitle(newTitle );
+            task.setDescription(newDescription);
+            DataManager.updateTask(task);
+            updateTaskInParent();
         });
 
         description = view.findViewById(R.id.todo_description);
 
         statusGroup = view.findViewById(R.id.status_group);
-        statusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                String status = "";
-                switch (checkedId) {
-                    case R.id.waiting_status:
-                        status = "waiting";
-                        break;
-                    case R.id.in_progress_status:
-                        status = "in progress";
-                        break;
-                    case R.id.done_status:
-                        status = "done";
-                        break;
-                }
-
-                if (getContext() instanceof ShowTask) {
-                    ((ShowTask) getContext()).updateStatus(task.getId(), status);
-                }
+        statusGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            String status = "";
+            switch (checkedId) {
+                case R.id.waiting_status:
+                    status = "waiting";
+                    break;
+                case R.id.in_progress_status:
+                    status = "in progress";
+                    break;
+                case R.id.done_status:
+                    status = "done";
+                    break;
             }
+            task.setStatus(status);
+            DataManager.updateTask(task);
+            updateTaskInParent();
+
         });
-        updateInformationUI(task);
     }
 
-    public void updateInformationUI(Task task) {
+    private void updateTaskInParent() {
+        Context context = getContext();
+        if (context instanceof TaskUpdateable) {
+            ((TaskUpdateable) context).updateTask(currentTaskPosition);
+        }
+    }
+
+    /**
+     * updates info infragment
+     * @param task
+     * @param position
+     */
+    public void updateInformationUI(Task task, int position) {
         this.task = task;
+        this.currentTaskPosition = position;
         if (getView() != null) {
             title.setText( task.getTitle());
             description.setText(task.getDescription());

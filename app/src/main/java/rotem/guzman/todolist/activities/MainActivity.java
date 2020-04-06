@@ -2,7 +2,6 @@ package rotem.guzman.todolist.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import java.util.List;
@@ -16,16 +15,18 @@ import rotem.guzman.todolist.R;
 import rotem.guzman.todolist.database.DataManager;
 import rotem.guzman.todolist.fragments.TaskFragment;
 import rotem.guzman.todolist.model.Task;
-import rotem.guzman.todolist.utils.ShowTask;
-import rotem.guzman.todolist.utils.TaskAdapter;
+import rotem.guzman.todolist.utils.OnTaskClickListener;
+import rotem.guzman.todolist.utils.TaskUpdateable;
+import rotem.guzman.todolist.utils.TaskListenerAdapter;
 
-public class MainActivity extends AppCompatActivity implements ShowTask {
+public class MainActivity extends AppCompatActivity
+        implements TaskUpdateable, OnTaskClickListener {
 
-    TaskAdapter adapter;
+    static TaskListenerAdapter adapter;
     RecyclerView taskListRv;
-    List<Task> list = DataManager.getMyTasks();
 
     Button addNewTaskBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,81 +35,61 @@ public class MainActivity extends AppCompatActivity implements ShowTask {
 
         taskListRv = findViewById(R.id.task_list_rv);
 
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 this,
                 RecyclerView.VERTICAL,
                 false);
         taskListRv.setLayoutManager(layoutManager);
 
-        adapter = new TaskAdapter(this, DataManager.getMyTasks());
-
+        List<Task> myTasks = DataManager.getMyTasks();
+        adapter = new TaskListenerAdapter(this, myTasks);
         taskListRv.setAdapter(adapter);
+        adapter.setListener(this);
+
+        if (!myTasks.isEmpty()) {
+            showTaskFragmnet(myTasks.get(0), 0);
+        }
 
         taskListRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         addNewTaskBtn = findViewById(R.id.add_new_task_btn);
-        addNewTaskBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
-                startActivity(intent);
-            }
+        addNewTaskBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
+            startActivity(intent);
         });
     }
 
+
     @Override
-    public void showTask(Task task) {
+    public void updateTask(int taskPosition) {
+        adapter.updateTask(taskPosition);
+    }
+
+    public static void sortTasks(List<Task> list){
+        adapter.setList(list);
+    }
+
+    private void showTaskFragmnet(Task task, int position) {
         FragmentManager manger = getSupportFragmentManager();
         TaskFragment fragment = (TaskFragment) manger.findFragmentByTag("task");
         if (fragment != null) {
-            fragment.updateInformationUI(task);
+            fragment.updateInformationUI(task,position);
             return;
-        } else {
-            fragment = TaskFragment.newInstance(task.getId());
+        }
+
+        fragment = TaskFragment.newInstance(task.getId(), position );
 //            fragment = new TaskFragment();
-            manger.beginTransaction()
-                    .add(R.id.container, fragment, "task")
-                    //.addToBackStack("fragment") //Adds the replaced fragment to the stack
-                    .commit();
-            fragment.updateInformationUI(task);
-        }
+        manger.beginTransaction()
+                .add(R.id.container, fragment, "task")
+                //.addToBackStack("fragment") //Adds the replaced fragment to the stack
+                .commit();
+        fragment.updateInformationUI(task, position);
     }
 
-    @Override
-    public void updateStatus(int id, String status) {
-        for (int i = 0; i < list.size(); i++) {
-            Task task = list.get(i);
-            if (task.getId() == id) {
-                task.setStatus(status);
-                DataManager.updateTask(task);
-                adapter.updateData(list);
-                return;
-            }
-        }
-        //Toast.makeText(this, status.name(), Toast.LENGTH_SHORT).show();
-    }
 
     @Override
-    public void updateTitle(int id, String title) {
-        for (int i = 0; i < list.size(); i++) {
-            Task task = list.get(i);
-            if (task.getId() == id) {
-                task.setTitle(title);
-                DataManager.updateTask(task);
-                adapter.updateData(list);
-                return;
-            }
-        }}
-
-    @Override
-    public void updateDescription(int id, String description) {
-        for (int i = 0; i < list.size(); i++) {
-            Task task = list.get(i);
-            if (task.getId() == id) {
-                task.setDescription(description);
-                DataManager.updateTask(task);
-                adapter.updateData(list);
-                return;
-            }}
+    public void onTaskClicked(Task task, int taskPosition) {
+        showTaskFragmnet(task,taskPosition);
     }
 }

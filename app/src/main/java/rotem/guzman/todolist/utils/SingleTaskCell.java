@@ -43,14 +43,14 @@ public class SingleTaskCell extends ConstraintLayout {
         if (todo.getStatus()!= null){
         switch (todo.getStatus()){
             case "waiting":
-                color = Color.RED;
+                color = getResources().getColor(R.color.red);
                 break;
             case "in progress":
-                color = Color.BLUE;
+                color = getResources().getColor(R.color.blue);
                 break;
 
             case "done":
-                color = Color.GREEN;
+                color = getResources().getColor(R.color.green);
                 break;
         }
         statusIndicator.setBackgroundColor(color);

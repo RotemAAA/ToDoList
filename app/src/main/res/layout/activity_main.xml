@@ -33,7 +33,35 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.096" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <rotem.guzman.todolist.utils.PinkButton
+        android:id="@+id/pink_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="show all"
+        android:layout_weight="1" />
+    <rotem.guzman.todolist.utils.RedButton
+        android:id="@+id/red_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="waiting"
+        android:layout_weight="1" />
+    <rotem.guzman.todolist.utils.BlueButton
+        android:id="@+id/blue_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="in progress"
+        android:layout_weight="1"/>
+    <rotem.guzman.todolist.utils.GreenButton
+        android:id="@+id/green_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="done"
+        android:layout_weight="1"/>
+</LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/task_list_rv"
             android:layout_width="match_parent"

@@ -85,4 +85,21 @@ public class DataManager {
 
         return null;
     }
+
+    public static List<Task> findTaskByStatus(String status) {
+//        for (Task task : db.taskDao().getAll()) {
+//            if (task.getStatus().equals(status)) {
+//                return task;
+//            }
+//
+//        }
+        List<Task> tasks = new ArrayList<>();
+
+        for (int i = 0; i < db.taskDao().getAll().size(); i++) {
+            if (db.taskDao().getTodoById(i).getStatus().equals(status)){
+                tasks.add(db.taskDao().getTodoById(i));
+            }
+        }
+        return tasks;
+    }
 }

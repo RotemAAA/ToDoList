@@ -1,6 +1,9 @@
 package rotem.guzman.todolist.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import rotem.guzman.todolist.R;
+import rotem.guzman.todolist.activities.AddTaskActivity;
+import rotem.guzman.todolist.activities.MainActivity;
 import rotem.guzman.todolist.database.DataManager;
 import rotem.guzman.todolist.model.Task;
 import rotem.guzman.todolist.utils.TaskUpdateable;
@@ -23,6 +31,8 @@ public class TaskFragment extends Fragment {
     private EditText title, description;
     private RadioGroup statusGroup;
     private int currentTaskPosition;
+    Button deleteBtn;
+
 
     public static TaskFragment newInstance(int taskId, int position) {
         TaskFragment fragment = new TaskFragment();
@@ -30,6 +40,7 @@ public class TaskFragment extends Fragment {
         args.putInt("TASK_ID", taskId);
         args.putInt("POSITION", position);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -59,10 +70,13 @@ public class TaskFragment extends Fragment {
         title = view.findViewById(R.id.todo_title);
 
         Button updateBtn = view.findViewById(R.id.update_btn);
+        deleteBtn = view.findViewById(R.id.delete_btn);
 //        if (title != null)
 //        title.setText(task.getTitle());
 //        if (description != null)
 //        description.setText(task.getDescription());
+
+
 
         updateBtn.setOnClickListener(v -> {
             String newTitle = title.getText().toString();
@@ -71,6 +85,35 @@ public class TaskFragment extends Fragment {
             task.setDescription(newDescription);
             DataManager.updateTask(task);
             updateTaskInParent();
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = getContext();
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+
+                alertDialog.setTitle("DELETE TASK");
+                alertDialog.setMessage("Press ok to DELETE task!");
+                alertDialog.setCancelable(false);
+                alertDialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "Your clicked cancel",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.setPositiveButton("delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteTask(task, currentTaskPosition);
+                        updateTaskInParent();
+                        updateInformationUI(task, currentTaskPosition);
+                    }
+                });
+                alertDialog.show();
+            }
+
         });
 
         description = view.findViewById(R.id.todo_description);
@@ -102,7 +145,13 @@ public class TaskFragment extends Fragment {
             ((TaskUpdateable) context).updateTask(currentTaskPosition);
         }
     }
-
+public void deleteTask(Task task, int position){
+        DataManager.deleteTask(task);
+        if (DataManager.getMyTasks()!= null) {
+            Task task1 = DataManager.getMyTasks().get(0);
+       updateTaskInParent();
+       updateInformationUI(task1, 0);
+}}
     /**
      * updates info infragment
      * @param task
@@ -134,8 +183,10 @@ public class TaskFragment extends Fragment {
                 case "done":
                     id = R.id.done_status;
                     break;
+
             }
             statusGroup.check(id);
         }
     }
+
 }

@@ -74,7 +74,9 @@ public class MainActivity extends AppCompatActivity
         FragmentManager manger = getSupportFragmentManager();
         TaskFragment fragment = (TaskFragment) manger.findFragmentByTag("task");
         if (fragment != null) {
+
             fragment.updateInformationUI(task,position);
+
             return;
         }
 
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity
                 //.addToBackStack("fragment") //Adds the replaced fragment to the stack
                 .commit();
         fragment.updateInformationUI(task, position);
+
     }
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,23 +9,33 @@
     tools:context=".activities.MainActivity">
 
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <LinearLayout
-        android:layout_width="350dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/list_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:padding="8dp"
             android:text="TO DO LIST"
             android:textAlignment="center"
+            android:gravity="center"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.455"
@@ -33,55 +43,77 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.096" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <rotem.guzman.todolist.utils.PinkButton
-        android:id="@+id/pink_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="show all"
-        android:layout_weight="1" />
-    <rotem.guzman.todolist.utils.RedButton
-        android:id="@+id/red_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="waiting"
-        android:layout_weight="1" />
-    <rotem.guzman.todolist.utils.BlueButton
-        android:id="@+id/blue_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="in progress"
-        android:layout_weight="1"/>
-    <rotem.guzman.todolist.utils.GreenButton
-        android:id="@+id/green_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="done"
-        android:layout_weight="1"/>
-</LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <rotem.guzman.todolist.utils.BlueButton
+                android:id="@+id/blue_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="12dp"
+                android:text="in progress" />
+
+            <rotem.guzman.todolist.utils.GreenButton
+                android:id="@+id/green_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="12dp"
+                android:text="done" />
+
+            <rotem.guzman.todolist.utils.PinkButton
+                android:id="@+id/pink_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="12dp"
+                android:text="show all" />
+
+            <rotem.guzman.todolist.utils.RedButton
+                android:id="@+id/red_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="12dp"
+                android:text="waiting" />
+
+        </LinearLayout>
+
+
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/task_list_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="20"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent" />
         <Button
             android:id="@+id/add_new_task_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="20dp"
             android:layout_weight="2"
-            android:clickable="true"
             android:background="@drawable/roundedbutton"
+            android:clickable="true"
             android:text="add"></Button>
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

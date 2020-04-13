@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import rotem.guzman.todolist.model.Task;
 public class TaskListenerAdapter extends RecyclerView.Adapter<TaskListenerAdapter.TaskViewHolder>
 implements TaskUpdateable {
 
-    private List<Task> list;
+    private List<Task> list = new ArrayList<>();
     private Context context;
     private OnTaskClickListener listener;
 

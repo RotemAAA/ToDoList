@@ -86,6 +86,15 @@ public class DataManager {
         return null;
     }
 
+    public static void deleteTask(Task task){
+        myTasks.remove(task);
+        db.taskDao().delete(task);
+
+
+
+        count--;
+    }
+
     public static List<Task> findTaskByStatus(String status) {
 //        for (Task task : db.taskDao().getAll()) {
 //            if (task.getStatus().equals(status)) {

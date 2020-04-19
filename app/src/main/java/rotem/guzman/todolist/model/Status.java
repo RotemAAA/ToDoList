@@ -1,7 +1,13 @@
 package rotem.guzman.todolist.model;
 
 public enum Status {
-    WAITING, IN_PROGRESS, DONE, UNKNOWN;
+    WAITING("waiting"), IN_PROGRESS("in progress"), DONE("done"), UNKNOWN("unknown");
+
+    public final String state;
+
+    Status(String state) {
+        this.state = state;
+    }
 
     public static Status getStatus(String input) {
 
@@ -16,6 +22,7 @@ public enum Status {
                 break;
             case "done":
                 selectedStatus = DONE;
+                break;
             default:
                 selectedStatus = UNKNOWN;
 

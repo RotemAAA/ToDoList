@@ -10,10 +10,13 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import rotem.guzman.todolist.R;
 import rotem.guzman.todolist.database.DataManager;
+import rotem.guzman.todolist.model.Status;
 import rotem.guzman.todolist.model.Task;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -26,7 +29,7 @@ public class AddTaskActivity extends AppCompatActivity {
     Button saveBtn;
 
     RadioGroup statusGroup;
-    String myStatus = "waiting";
+    Status myStatus = Status.WAITING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +46,19 @@ public class AddTaskActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 //  Status status =Status.WAITING;
-                String status = "waiting";
+                Status status = Status.WAITING;
 
                 switch (checkedId) {
                     case R.id.waiting_rb:
-                        status = "waiting";
+                        status = Status.WAITING;
                         break;
 
                     case R.id.in_progress_rb:
-                        status = "in progress";
+                        status = Status.IN_PROGRESS;
                         break;
 
                     case R.id.done_rb:
-                        status = "done";
+                        status = Status.DONE;
                         break;
 
                 }
@@ -100,7 +103,9 @@ public class AddTaskActivity extends AppCompatActivity {
 //                        }, 3000);
                 newTaskTitleString = myTaskTitleEt.getText().toString();
                 newTaskDescriptionString = myTaskDescriptionEt.getText().toString();
-                Task task = new Task(DataManager.getCount(), newTaskTitleString, newTaskDescriptionString, myStatus);
+                Date date = new Date();
+                date.setTime(System.currentTimeMillis());
+                Task task = new Task(DataManager.getCount(), newTaskTitleString, newTaskDescriptionString, myStatus, date );
 
 
                 DataManager.addTask(task);

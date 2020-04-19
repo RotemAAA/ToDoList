@@ -23,6 +23,7 @@ import rotem.guzman.todolist.R;
 import rotem.guzman.todolist.activities.AddTaskActivity;
 import rotem.guzman.todolist.activities.MainActivity;
 import rotem.guzman.todolist.database.DataManager;
+import rotem.guzman.todolist.model.Status;
 import rotem.guzman.todolist.model.Task;
 import rotem.guzman.todolist.utils.TaskUpdateable;
 
@@ -120,16 +121,16 @@ public class TaskFragment extends Fragment {
 
         statusGroup = view.findViewById(R.id.status_group);
         statusGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            String status = "";
+            Status status = Status.WAITING;
             switch (checkedId) {
                 case R.id.waiting_status:
-                    status = "waiting";
+                    status = Status.WAITING;
                     break;
                 case R.id.in_progress_status:
-                    status = "in progress";
+                    status = Status.IN_PROGRESS;
                     break;
                 case R.id.done_status:
-                    status = "done";
+                    status = Status.DONE;
                     break;
             }
             task.setStatus(status);
@@ -174,13 +175,13 @@ public void deleteTask(Task task, int position){
             //indicate correct status
             @IdRes int id = 0;
             switch (task.getStatus()) {
-                case "waiting":
+                case WAITING:
                     id = R.id.waiting_status;
                     break;
-                case "in progress":
+                case IN_PROGRESS:
                     id = R.id.in_progress_status;
                     break;
-                case "done":
+                case DONE:
                     id = R.id.done_status;
                     break;
 

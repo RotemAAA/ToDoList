@@ -3,9 +3,12 @@ package rotem.guzman.todolist.database;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.room.Room;
+import rotem.guzman.todolist.database.converters.DateConverter;
+import rotem.guzman.todolist.model.Status;
 import rotem.guzman.todolist.model.Task;
 
 public class DataManager {
@@ -34,7 +37,9 @@ public class DataManager {
     public static void createDummyTask() {
         ArrayList<Task> list = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
-            Task task = new Task(i, "title " + i, "description " + i, "waiting");
+            Date date = new Date();
+            date.setTime(System.currentTimeMillis());
+            Task task = new Task(i, "title " + i, "description " + i, Status.WAITING, date);
             list.add(task);
         }
         db.taskDao().insertAll(list);
